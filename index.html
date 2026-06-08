@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Think How Learning | Master Math</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Landing Page Palette */
+            --primary: #00A6DA;
+            --primary-hover: #008CB8;
+            --accent: #FF9F00;
+            --accent-shadow: #CC7F00;
+            --bg-color: #F0F7FF;
+            --text-dark: #2D3748;
+            --text-muted: #718096;
+            --border-light: #E2E8F0;
+
+            /* Portal Gamified Palette */
+            --blue: #1CB0F6;
+            --blue-shadow: #1899D6;
+            --green: #58CC02;
+            --green-shadow: #4BA802;
+            --orange: #FF9600;
+            --orange-shadow: #CC7800;
+            --pink: #FF4B4B;
+            --pink-shadow: #CE3C3C;
+            --purple: #CE82FF;
+            --purple-shadow: #A568CC;
+            --yellow: #FFC800;
+            --yellow-shadow: #CCA000;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        /* Base Body (Landing Page Default) */
+        body {
+            background-color: #FFFFFF;
+            color: var(--text-dark);
+            line-height: 1.6;
+            transition: background 0.3s ease;
+        }
+
+        /* When Portal is Active */
+        body.portal-active {
+            background-color: #A5D6FF;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.4) 20px, transparent 21px),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.4) 30px, transparent 31px),
+                radial-gradient(circle at 50% 10%, rgba(255,255,255,0.3) 15px, transparent 16px);
+        }
+
+        /* --- GLOBAL BUTTONS --- */
+        .btn {
+            background: var(--accent); color: white; border: none;
+            padding: 14px 28px; border-radius: 50px; font-size: 1.1rem; font-weight: 800;
+            cursor: pointer; transition: all 0.1s; display: inline-flex; justify-content: center; align-items: center;
+            box-shadow: 0 6px 0 var(--accent-shadow);
+            text-transform: uppercase; letter-spacing: 1px; text-decoration: none;
+        }
+        .btn:hover { background: #FFAB2E; transform: translateY(2px); box-shadow: 0 4px 0 var(--accent-shadow); }
+        .btn:active { transform: translateY(6px); box-shadow: 0 0 0 transparent; }
+
+        .btn-outline {
+            background: white; border: 3px solid var(--border-light); 
+            color: var(--primary); box-shadow: 0 4px 0 var(--border-light);
+        }
+        .btn-outline:hover { background: #F8FAFC; border-color: var(--primary); box-shadow: 0 4px 0 var(--primary); color: var(--primary-hover);}
+
+        /* --- LANDING PAGE STYLES --- */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; background: white; box-shadow: 0 4px 15px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 1.8rem; font-weight: 900; color: var(--primary); text-decoration: none; letter-spacing: -0.5px; }
+        .logo span { color: var(--accent); }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-links a { text-decoration: none; font-weight: 800; color: var(--text-muted); font-size: 1.1rem; transition: 0.2s;}
+        .nav-links a:hover { color: var(--primary); }
+
+        .hero { display: flex; align-items: center; justify-content: space-between; padding: 60px 5%; background: var(--bg-color); background-image: radial-gradient(#D6E8FC 2px, transparent 2px); background-size: 30px 30px; min-height: 80vh; }
+        .hero-content { flex: 1; padding-right: 50px; }
+        .hero h1 { font-size: 3.5rem; font-weight: 900; color: var(--text-dark); margin-bottom: 20px; line-height: 1.1; }
+        .hero h1 span { color: var(--primary); }
+        .hero p { font-size: 1.3rem; color: var(--text-muted); font-weight: 600; margin-bottom: 30px; }
+        .hero-image { flex: 1; text-align: center; }
+        .hero-image img { width: 100%; max-width: 600px; border-radius: 30px; border: 6px solid white; box-shadow: 0 20px 40px rgba(0, 166, 218, 0.2); transform: rotate(2deg); }
+
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-header h2 { font-size: 2.5rem; font-weight: 900; color: var(--primary); }
+        .section-header p { font-size: 1.2rem; font-weight: 600; color: var(--text-muted); margin-top: 10px; }
+
+        .programs { padding: 80px 5%; background: white; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .card { background: white; border: 3px solid var(--border-light); border-radius: 25px; overflow: hidden; box-shadow: 0 10px 0 var(--border-light); transition: 0.3s; text-align: center; }
+        .card:hover { border-color: var(--primary); transform: translateY(-10px); box-shadow: 0 15px 0 var(--primary); }
+        .card img { width: 100%; height: 250px; object-fit: cover; border-bottom: 3px solid var(--border-light); }
+        .card-body { padding: 30px; }
+        .card-body h3 { font-size: 1.5rem; font-weight: 800; color: var(--text-dark); margin-bottom: 10px; }
+        .card-body p { font-weight: 600; color: var(--text-muted); margin-bottom: 20px; }
+        .age-badge { display: inline-block; background: #FFF4E5; color: var(--accent); padding: 8px 16px; border-radius: 20px; font-weight: 900; font-size: 0.9rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;}
+
+        .features { padding: 80px 5%; background: var(--bg-color); }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .feature-item { background: white; padding: 25px; border-radius: 25px; border: 3px solid var(--border-light); box-shadow: 0 6px 0 var(--border-light); display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .feature-item img { width: 100%; height: 200px; object-fit: cover; border-radius: 15px; margin-bottom: 20px; }
+        .feature-item h3 { font-size: 1.3rem; font-weight: 900; color: var(--primary); margin-bottom: 10px; }
+        .feature-item p { font-weight: 600; color: var(--text-muted); }
+
+        .testimonials { padding: 80px 5%; background: white; }
+        .test-card { background: #F8FAFC; border: 3px solid var(--border-light); border-radius: 25px; padding: 40px 30px; text-align: center; box-shadow: 0 8px 0 var(--border-light); position: relative; }
+        .test-card img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 4px solid var(--accent); margin-top: -80px; margin-bottom: 20px; background: white; }
+        .test-card p { font-size: 1.1rem; font-weight: 600; font-style: italic; color: var(--text-dark); margin-bottom: 20px; }
+        .test-card h4 { font-weight: 900; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; }
+
+        .cta { padding: 80px 5%; background: var(--primary); text-align: center; color: white; background-image: radial-gradient(rgba(255,255,255,0.2) 2px, transparent 2px); background-size: 30px 30px; }
+        .cta h2 { font-size: 3rem; font-weight: 900; margin-bottom: 20px; }
+        .cta p { font-size: 1.2rem; font-weight: 600; margin-bottom: 30px; }
+        footer { text-align: center; padding: 30px; font-weight: 800; color: var(--text-muted); background: white; border-top: 3px solid var(--border-light); }
+
+        /* --- PORTAL STYLES --- */
+        #portal-container {
+            display: none; /* Hidden by default */
+            flex-direction: column; align-items: center; padding: 40px 5%;
+            min-height: 100vh;
+        }
+
+        .portal-logo { font-size: 2.5rem; font-weight: 900; color: white; text-decoration: none; letter-spacing: -0.5px; margin-bottom: 30px; text-align: center; display: block; text-shadow: 0 4px 0 rgba(0,0,0,0.1); }
+        .portal-logo span { color: var(--yellow); }
+        .portal-card h1 { font-size: 2.2rem; font-weight: 900; margin-bottom: 10px; color: var(--text-dark); text-align: center; }
+        .portal-card h2 { font-size: 1.8rem; font-weight: 900; margin-bottom: 15px; color: var(--text-dark); text-align: center; }
+        p.subtitle { text-align: center; color: var(--text-muted); font-weight: 700; margin-bottom: 30px; font-size: 1.1rem; }
+
+        .portal-card { background: white; border: 4px solid var(--border-light); border-radius: 30px; padding: 40px; width: 100%; max-width: 600px; box-shadow: 0 10px 0 var(--border-light); display: none; position: relative; }
+        .portal-card.active { display: block; animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .btn-portal { width: 100%; margin-bottom: 15px; padding: 16px 28px; border-radius: 20px; font-size: 1.2rem; background: var(--blue); box-shadow: 0 6px 0 var(--blue-shadow); color: white; }
+        .btn-green { background: var(--green); box-shadow: 0 6px 0 var(--green-shadow); }
+        .btn-orange { background: var(--orange); box-shadow: 0 6px 0 var(--orange-shadow); }
+        .btn-pink { background: var(--pink); box-shadow: 0 6px 0 var(--pink-shadow); }
+        .btn-yellow { background: var(--yellow); box-shadow: 0 6px 0 var(--yellow-shadow); color: var(--text-dark); }
+        
+        .btn-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
+        .btn-group .btn { width: auto; flex: 1; margin-bottom: 0; padding: 14px 20px; font-size: 1rem; }
+        .btn-small { padding: 12px 20px; font-size: 1rem; border-radius: 15px; }
+
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; font-weight: 800; margin-bottom: 8px; color: var(--text-dark); font-size: 1.1rem;}
+        .form-control { width: 100%; padding: 15px; font-size: 1.1rem; font-weight: 700; border: 3px solid var(--border-light); border-radius: 15px; background: #F7F9FC; color: var(--text-dark); transition: 0.3s; }
+        .form-control:focus { outline: none; border-color: var(--blue); background: white; box-shadow: 0 0 0 4px rgba(28, 176, 246, 0.2); }
+
+        .menu-list { list-style: none; display: grid; gap: 15px; }
+        .menu-list li button { width: 100%; padding: 18px 20px; text-align: left; font-size: 1.2rem; font-weight: 800; background: white; border: 3px solid var(--border-light); border-radius: 20px; color: var(--text-dark); cursor: pointer; transition: 0.2s; box-shadow: 0 6px 0 var(--border-light); display: flex; align-items: center; gap: 15px; }
+        .menu-list li button:active { transform: translateY(6px); box-shadow: 0 0 0 transparent; }
+        .menu-list li:nth-child(1) button { border-color: var(--blue); color: var(--blue-shadow); box-shadow: 0 6px 0 var(--blue); }
+        .menu-list li:nth-child(2) button { border-color: var(--green); color: var(--green-shadow); box-shadow: 0 6px 0 var(--green); }
+        .menu-list li:nth-child(3) button { border-color: var(--orange); color: var(--orange-shadow); box-shadow: 0 6px 0 var(--orange); }
+        .menu-list li:nth-child(4) button { border-color: var(--pink); color: var(--pink-shadow); box-shadow: 0 6px 0 var(--pink); }
+        .menu-list li:nth-child(5) button { border-color: var(--purple); color: var(--purple-shadow); box-shadow: 0 6px 0 var(--purple); }
+        .menu-list li:nth-child(6) button { border-color: var(--blue); color: var(--blue-shadow); box-shadow: 0 6px 0 var(--blue); }
+
+        .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px dashed var(--border-light); }
+        .points-box { background: var(--yellow); color: var(--text-dark); padding: 8px 20px; border-radius: 20px; font-weight: 900; font-size: 1.2rem; border: 3px solid var(--yellow-shadow); box-shadow: 0 4px 0 var(--yellow-shadow); display: flex; align-items: center; gap: 8px; }
+        .question-text { font-size: 1.5rem; font-weight: 900; margin-bottom: 25px; color: var(--text-dark); line-height: 1.4;}
+        .options { display: grid; gap: 15px; margin-bottom: 30px; }
+        
+        .option-label { display: flex; align-items: center; padding: 18px 20px; background: white; border: 3px solid var(--border-light); border-radius: 20px; font-weight: 800; cursor: pointer; transition: 0.2s; font-size: 1.2rem; color: var(--text-dark); box-shadow: 0 5px 0 var(--border-light); }
+        .option-label:hover { background: #F7F9FC; transform: translateY(-2px); }
+        .option-label input { display: none; }
+        
+        .custom-radio { width: 24px; height: 24px; border: 3px solid var(--border-light); border-radius: 50%; margin-right: 15px; display: inline-block; position: relative; }
+        .option-label input:checked + .custom-radio { border-color: var(--blue); }
+        .option-label input:checked + .custom-radio::after { content: ''; position: absolute; top: 3px; left: 3px; width: 12px; height: 12px; background: var(--blue); border-radius: 50%; }
+        
+        /* Instant Feedback Colors */
+        .option-correct { border-color: var(--green) !important; background: #E8F9DB !important; box-shadow: 0 5px 0 var(--green) !important; color: var(--text-dark) !important; }
+        .option-correct .custom-radio { border-color: var(--green) !important; }
+        .option-correct .custom-radio::after { content: ''; position: absolute; top: 3px; left: 3px; width: 12px; height: 12px; background: var(--green) !important; border-radius: 50%; }
+        
+        .option-incorrect { border-color: var(--pink) !important; background: #FFEDED !important; box-shadow: 0 5px 0 var(--pink) !important; color: var(--text-dark) !important; }
+        .option-incorrect .custom-radio { border-color: var(--pink) !important; }
+        .option-incorrect .custom-radio::after { content: ''; position: absolute; top: 3px; left: 3px; width: 12px; height: 12px; background: var(--pink) !important; border-radius: 50%; }
+
+        /* Disable pointer events once answered */
+        .options.answered { pointer-events: none; }
+
+        .jump-box { display: flex; gap: 10px; align-items: center; margin-top: 25px; padding-top: 20px; border-top: 3px dashed var(--border-light); justify-content: center; }
+        .jump-box input { width: 80px; text-align: center; font-size: 1.2rem; }
+        .whatsapp-text { font-size: 1.5rem; font-weight: 900; color: var(--green); margin: 20px 0; background: #E8F9DB; padding: 15px; border-radius: 20px; border: 3px solid var(--green-shadow); display: inline-block;}
+
+        /* Explanation Box Style added */
+        .explanation-box {
+            display: none; 
+            background: #FFF4E5; 
+            border: 3px dashed var(--orange);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            color: var(--text-dark);
+            font-weight: 700;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .hero { flex-direction: column; text-align: center; padding-top: 40px; }
+            .hero-content { padding-right: 0; margin-bottom: 40px; }
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
+            .test-card { margin-top: 50px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="landing-container">
+        <nav>
+            <a href="#" class="logo">Think How <span>Learning</span></a>
+            <div class="nav-links">
+                <a href="#programs">Curriculum</a>
+                <a href="#features">The MCQ Method</a>
+                <a href="#testimonials">Success Stories</a>
+                <button onclick="openStudentPortal()" class="btn btn-outline" style="padding: 10px 20px; font-size: 1rem;">Student Portal</button>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Master Mathematics with <span>Think How Learning</span></h1>
+                <p>America's premier learning platform utilizing a unique multiple-choice question methodology to build critical math and reasoning skills for 6th to 10th-grade students.</p>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <a href="#programs" class="btn">View Grade Levels</a>
+                    <button onclick="openStudentPortal()" class="btn btn-outline">Enter Portal</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="1.png" alt="Student reviewing math progress">
+            </div>
+        </section>
+
+        <section id="programs" class="programs">
+            <div class="section-header">
+                <h2>Targeted Skill Building</h2>
+                <p>Curriculum specifically designed for middle and early high school students.</p>
+            </div>
+            <div class="grid-3">
+                <div class="card">
+                    <img src="2.2.png" alt="Student engaged in foundational math">
+                    <div class="card-body">
+                        <span class="age-badge">6th & 7th Grade</span>
+                        <h3>Middle School Foundations</h3>
+                        <p>Mastering fractions, decimals, integers, and pre-algebra concepts through strategic multiple-choice logic.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="2.png" alt="Student solving algebra problems">
+                    <div class="card-body">
+                        <span class="age-badge">8th & 9th Grade</span>
+                        <h3>Algebra & Geometry</h3>
+                        <p>Deep diving into linear equations, number systems, and polynomials using our unique elimination-based learning.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="2.1.png" alt="High school student focusing on advanced reasoning">
+                    <div class="card-body">
+                        <span class="age-badge">10th Grade</span>
+                        <h3>Advanced Reasoning</h3>
+                        <p>Rigorous preparation for advanced real numbers, polynomial equations, and foundational high school math testing.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="section-header">
+                <h2>The Think How Advantage</h2>
+                <p>Why our multiple-choice question (MCQ) methodology works.</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <img src="3.png" alt="Teacher explaining multiple choice strategies">
+                    <h3>The MCQ Methodology</h3>
+                    <p>We don't just ask questions. Our carefully crafted MCQs train students to think critically, use process of elimination, and truly understand the *why* behind the math.</p>
+                </div>
+                <div class="feature-item">
+                    <img src="3.1.png" alt="Student using interactive digital assessment">
+                    <h3>Instant Analytics</h3>
+                    <p>No more waiting for graded worksheets. Students get immediate feedback on their choices, helping them correct misconceptions in real-time.</p>
+                </div>
+                <div class="feature-item">
+                    <img src="3.2.png" alt="Students celebrating a perfect assessment score">
+                    <h3>Built for US Standards</h3>
+                    <p>Our question banks are meticulously aligned with core mathematical standards for US middle and high schools.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="testimonials">
+            <div class="section-header">
+                <h2>Trusted by Families</h2>
+                <p>See how our unique approach is changing the way students feel about math.</p>
+            </div>
+            <div class="grid-3" style="margin-top: 60px;">
+                <div class="test-card">
+                    <img src="4.png" alt="Mother and middle school daughter smiling">
+                    <p>"The multiple-choice format takes the anxiety out of math for my 7th grader. Instead of freezing up on a blank page, she uses logic to find the right answer!"</p>
+                    <h4>Mayim & Alicia</h4>
+                </div>
+                <div class="test-card">
+                    <img src="4.1.png" alt="Father and teenage son smiling">
+                    <p>"Think How Learning has completely changed our homework routine. The instant feedback means my son learns from his mistakes immediately."</p>
+                    <h4>Moby & Harrelson</h4>
+                </div>
+                <div class="test-card">
+                    <img src="4.2.png" alt="Father and high school daughter smiling">
+                    <p>"Perfect for my 10th grader. The advanced reasoning questions are challenging but incredibly rewarding."</p>
+                    <h4>Raj & Priya</h4>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <h2>Ready to Transform Math Skills?</h2>
+            <p>Give your student the tools to think critically and succeed in mathematics.</p>
+            <button onclick="openStudentPortal()" class="btn" style="background: white; color: var(--primary); box-shadow: 0 6px 0 var(--border-light);">Enter Student Portal</button>
+        </section>
+
+        <footer>
+            &copy; 2026 Think How Learning. All rights reserved.
+        </footer>
+    </div>
+
+
+    <div id="portal-container">
+        
+        <div class="portal-logo">Think How <br><span>⭐ Learning ⭐</span></div>
+
+        <div id="view-access" class="portal-card active">
+            <h1>👋 Welcome!</h1>
+            <p class="subtitle">Choose your adventure to begin:</p>
+            <button class="btn btn-portal btn-green" onclick="showView('view-trial-form')"> Trial Access</button>
+            <button class="btn btn-portal btn-orange" onclick="showView('view-premium-menu')"> Premium Access</button>
+            <a href="https://www.paypal.com/your-payment-link-here" target="_blank" class="btn btn-portal" style="text-decoration: none;">
+   Pay for Premium Access
+</a>
+<button class="btn btn-portal btn-outline" style="margin-top: 20px; background-color: white; color: #1CB0F6;" onclick="closeStudentPortal()">🏠 Back to Home</button>        </div>
+
+        <div id="view-trial-form" class="portal-card">
+            <h2>Start Free Trial 🎁</h2>
+            <p class="subtitle">Let's get to know you first!</p>
+            <div class="form-group"><label>Student Name *</label><input type="text" class="form-control" id="trial-name" placeholder="E.g., Alex" required></div>
+            <div class="form-group">
+                <label>Grade *</label>
+                <select class="form-control" id="trial-grade" required>
+                    <option value="">Select Grade</option>
+                    <option value="6">6th Grade 🎒</option>
+                    <option value="7">7th Grade 📘</option>
+                    <option value="8">8th Grade 📐</option>
+                    <option value="9">9th Grade 🔬</option>
+                    <option value="10">10th Grade 🎓</option>
+                </select>
+            </div>
+            <div class="form-group"><label>City *</label><input type="text" class="form-control" id="trial-city" required></div>
+            <div class="form-group"><label>Mobile Number *</label><input type="tel" class="form-control" id="trial-mobile" required></div>
+            <div class="form-group"><label>Email ID *</label><input type="email" class="form-control" id="trial-email" required></div>
+            <div class="btn-group">
+                <button class="btn btn-outline" onclick="showView('view-access')">Back</button>
+                <button class="btn btn-green" onclick="submitTrialForm()">Let's Go! 🚀</button>
+            </div>
+        </div>
+
+        <div id="view-trial-menu" class="portal-card">
+            <h2>Trial Menu 🎮</h2>
+            <p class="subtitle">Pick a subject and start playing!</p>
+            <ul class="menu-list">
+                <li><button onclick="startQuiz('trial')"><span class="emoji-icon">🔢</span> Basic Mathematics</button></li>
+                <li><button onclick="startQuiz('trial')"><span class="emoji-icon">🎒</span> 6th Grade</button></li>
+                <li><button onclick="startQuiz('trial')"><span class="emoji-icon">📘</span> 7th Grade</button></li>
+                <li><button onclick="startQuiz('trial')"><span class="emoji-icon">📐</span> 8th Grade</button></li>
+                <li><button onclick="startQuiz('trial')"><span class="emoji-icon">🔬</span> 9th Grade</button></li>
+                <li><button onclick="startQuiz('trial')"><span class="emoji-icon">🎓</span> 10th Grade</button></li>
+            </ul>
+            <div class="btn-group" style="margin-top: 30px;">
+                <button class="btn btn-outline" onclick="showView('view-access')">Exit</button>
+            </div>
+        </div>
+
+        <div id="view-premium-menu" class="portal-card">
+            <h2>Premium Portal 🌟</h2>
+            <p class="subtitle">Select your grade level to log in.</p>
+            <ul class="menu-list">
+                <li><button onclick="showView('view-premium-login')"><span class="emoji-icon">🔢</span> Basic Mathematics</button></li>
+                <li><button onclick="showView('view-premium-login')"><span class="emoji-icon">🎒</span> Grade 6</button></li>
+                <li><button onclick="showView('view-premium-login')"><span class="emoji-icon">📘</span> Grade 7</button></li>
+                <li><button onclick="showView('view-premium-login')"><span class="emoji-icon">📐</span> Grade 8</button></li>
+                <li><button onclick="showView('view-premium-login')"><span class="emoji-icon">🔬</span> Grade 9</button></li>
+                <li><button onclick="showView('view-premium-login')"><span class="emoji-icon">🎓</span> Grade 10</button></li>
+            </ul>
+            <div class="btn-group" style="margin-top: 30px;">
+                <button class="btn btn-outline" onclick="showView('view-access')">Back</button>
+            </div>
+        </div>
+
+        <div id="view-premium-login" class="portal-card">
+            <h2>Secret Login 🔐</h2>
+            <p class="subtitle">Enter your details to unlock chapters.</p>
+            <div class="form-group"><label>Username</label><input type="text" class="form-control" id="prem-user" placeholder="Your hero name" required></div>
+            <div class="form-group"><label>Password</label><input type="password" class="form-control" id="prem-pass" placeholder="••••••••" required></div>
+            <div class="btn-group">
+                <button class="btn btn-outline" onclick="showView('view-premium-menu')">Back</button>
+                <button class="btn btn-orange" onclick="checkPremiumLogin()">Unlock 🔓</button>
+            </div>
+        </div>
+
+        <div id="view-premium-chapters" class="portal-card">
+            <h2>Choose a Chapter 🗺️</h2>
+            <p class="subtitle">Where to next?</p>
+            <ul class="menu-list">
+                <li><button onclick="startQuiz('premium')"><span class="emoji-icon">1️⃣</span> Number Systems</button></li>
+                <li><button onclick="startQuiz('premium')"><span class="emoji-icon">2️⃣</span> Polynomials</button></li>
+                <li><button onclick="startQuiz('premium')"><span class="emoji-icon">3️⃣</span> Linear Equations</button></li>
+                <li><button onclick="startQuiz('premium')"><span class="emoji-icon">4️⃣</span> Geometry Foundations</button></li>
+            </ul>
+            <div class="btn-group" style="margin-top: 30px;">
+                <button class="btn btn-outline" onclick="showView('view-premium-chapters')">Back to Grades</button>
+                <button class="btn btn-outline" onclick="closeStudentPortal()">Exit to Home</button>
+            </div>
+        </div>
+
+        <div id="view-quiz" class="portal-card">
+            <div class="quiz-header">
+                <h2 style="margin: 0; font-size: 1.5rem;">Solve This! 🧠</h2>
+                <div class="points-box">🪙 <span id="score-display">0</span></div>
+            </div>
+            <div id="quiz-content">
+                <div class="question-text" id="question-text">Loading question...</div>
+                <div class="options" id="options-container"></div>
+                <!-- Explanation Box -->
+                <div class="explanation-box" id="explanation-box"></div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-outline btn-small" onclick="prevQuestion()">⬅️ Back</button>
+                <button class="btn btn-pink btn-small" onclick="showHow()">💡 How</button>
+                <button class="btn btn-small btn-portal" id="next-btn" onclick="nextQuestion()">Next ➡️</button>
+                <button class="btn btn-green btn-small btn-portal" id="finish-btn" style="display:none;" onclick="finishQuiz()">Finish 🏁</button>
+            </div>
+            <div id="premium-tools" style="display: none;">
+                <div class="jump-box">
+                    <label style="font-weight: 800;">Jump to Q No:</label>
+                    <input type="number" class="form-control" id="jump-input" min="1" max="2" style="padding: 10px;">
+                    <button class="btn btn-yellow btn-small" onclick="jumpToQ()">GO 🚀</button>
+                </div>
+                <div class="btn-group" style="margin-top: 20px;">
+                    <button class="btn btn-outline btn-small" onclick="showView('view-premium-chapters')">Exit to Menu</button>
+                    <button class="btn btn-outline btn-small" onclick="closeStudentPortal()">Exit to Home</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-finish" class="portal-card" style="text-align: center;">
+            <div style="font-size: 5rem; margin-bottom: 10px;">🎉</div>
+            <h1 style="font-size: 2.5rem;">Quiz Finished!</h1>
+            <div class="points-box" style="display: inline-flex; font-size: 1.8rem; margin: 20px 0;">
+                🪙 Total Points: <span id="final-score" style="margin-left: 10px;">0</span>
+            </div>
+            <h2 style="color: var(--green);">Awesome Job! 🥳</h2>
+            <div id="trial-upsell" style="display: none; margin-top: 30px; border-top: 3px dashed var(--border-light); padding-top: 20px;">
+                <p style="font-size: 1.2rem; font-weight: 800; color: var(--text-dark);">Want full access and more fun chapters?</p>
+                <div class="whatsapp-text">📱 WhatsApp: 9739667787</div>
+            </div>
+            <div class="btn-group" style="margin-top: 30px; justify-content: center;">
+                <button class="btn btn-outline" onclick="closeStudentPortal()">🏠 Exit to Home</button>
+                <button class="btn btn-portal btn-blue" id="back-to-chap-btn" style="display:none;" onclick="showView('view-premium-chapters')">🗺️ Back to Chapters</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- PAGE SWITCHING LOGIC (SPA) ---
+        function openStudentPortal() {
+            document.getElementById('landing-container').style.display = 'none';
+            document.getElementById('portal-container').style.display = 'flex';
+            document.body.classList.add('portal-active');
+            showView('view-access');
+            window.scrollTo(0,0);
+        }
+
+        function closeStudentPortal() {
+            document.getElementById('portal-container').style.display = 'none';
+            document.getElementById('landing-container').style.display = 'block';
+            document.body.classList.remove('portal-active');
+            window.scrollTo(0,0);
+        }
+
+        // --- PORTAL DATA & STATE ---
+        const questions = [
+            {
+                question: "Q542. Write the number 'Five crore, twenty lakh, three thousand, forty' in standard numeral form.",
+                options: ["A) 5,20,30,040", "B) 5,20,03,040", "C) 5,02,30,040", "D) 5,20,00,340"],
+                correctIndex: 1,
+                explanation: "Using the Indian system: Crores place = 5, Lakhs place = 20, Thousands place = 03, Ones place = 040. Combining gives 5,20,03,040."
+            },
+            {
+                question: "If a triangle has angles measuring 45° and 45°, what is the measure of the third angle?",
+                options: ["45°", "90°", "100°", "180°"],
+                correctIndex: 1,
+                explanation: "The sum of all angles in a triangle is always 180°. Subtract the known angles: 180° - (45° + 45°) = 180° - 90° = 90°."
+            },
+            {
+                question: "Solve for x: 3x + 12 = 27",
+                options: ["x = 3", "x = 4", "x = 5", "x = 6"],
+                correctIndex: 2,
+                explanation: "First, subtract 12 from both sides: 3x = 15. Then, divide both sides by 3 to get x = 5."
+            }
+        ];
+
+        let currentQIndex = 0;
+        let score = 0;
+        let currentMode = 'trial'; 
+        let userAnswers = {}; 
+
+        // --- PORTAL NAVIGATION ---
+        function showView(viewId) {
+            document.querySelectorAll('.portal-card').forEach(card => card.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        // --- PORTAL LOGIC ---
+        function submitTrialForm() {
+            let name = document.getElementById('trial-name').value;
+            let grade = document.getElementById('trial-grade').value;
+            if(name && grade) {
+                showView('view-trial-menu');
+            } else {
+                alert("Oops! Please tell us your Name and Grade first. 🛑");
+            }
+        }
+
+        function checkPremiumLogin() {
+            let user = document.getElementById('prem-user').value;
+            let pass = document.getElementById('prem-pass').value;
+            if (user === "8088666694" && pass === "math10") {
+                showView('view-premium-chapters');
+                document.getElementById('prem-user').value = '';
+                document.getElementById('prem-pass').value = '';
+            } else {
+                alert("Oops! Incorrect username or password. Please try again! 🛑\n(Hint: use 'student10' and 'mathrocks')");
+            }
+        }
+
+        function startQuiz(mode) {
+            currentMode = mode;
+            currentQIndex = 0;
+            score = 0;
+            userAnswers = {};
+            
+            document.getElementById('premium-tools').style.display = (mode === 'premium') ? 'block' : 'none';
+            document.getElementById('jump-input').max = questions.length;
+            
+            loadQuestion();
+            showView('view-quiz');
+        }
+
+        function loadQuestion() {
+            const qData = questions[currentQIndex];
+            document.getElementById('question-text').innerText = qData.question; 
+            
+            let optionsHtml = '';
+            let isAnswered = userAnswers.hasOwnProperty(currentQIndex);
+
+            qData.options.forEach((opt, index) => {
+                let isChecked = userAnswers[currentQIndex] === index ? 'checked' : '';
+                let stateClass = '';
+                
+                // If previously answered, restore the correct/incorrect colors
+                if (isAnswered) {
+                    if (index === qData.correctIndex) {
+                        stateClass = 'option-correct';
+                    } else if (index === userAnswers[currentQIndex]) {
+                        stateClass = 'option-incorrect';
+                    }
+                }
+
+                optionsHtml += `
+                    <label class="option-label ${stateClass}" id="label-${index}" onclick="selectOption(${index})">
+                        <input type="radio" name="q_option" value="${index}" ${isChecked} ${isAnswered ? 'disabled' : ''}>
+                        <span class="custom-radio"></span>
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = optionsHtml;
+            
+            // Lock the options if already answered
+            if (isAnswered) {
+                container.classList.add('answered');
+            } else {
+                container.classList.remove('answered');
+            }
+            
+            const expBox = document.getElementById('explanation-box');
+            expBox.innerHTML = `💡 <strong>How to solve:</strong><br>${qData.explanation}`;
+            expBox.style.display = 'none';
+
+            updateScoreDisplay();
+
+            if (currentQIndex === questions.length - 1) {
+                document.getElementById('next-btn').style.display = 'none';
+                document.getElementById('finish-btn').style.display = 'inline-flex';
+            } else {
+                document.getElementById('next-btn').style.display = 'inline-flex';
+                document.getElementById('finish-btn').style.display = 'none';
+            }
+        }
+
+        function selectOption(index) {
+            if (userAnswers.hasOwnProperty(currentQIndex)) return; // Prevent changing answer once selected
+
+            userAnswers[currentQIndex] = index;
+            const correctIdx = questions[currentQIndex].correctIndex;
+
+            // Instantly highlight correct and incorrect options
+            if (index === correctIdx) {
+                document.getElementById(`label-${index}`).classList.add('option-correct');
+                document.querySelector(`#label-${index} input`).checked = true;
+            } else {
+                document.getElementById(`label-${index}`).classList.add('option-incorrect');
+                document.getElementById(`label-${correctIdx}`).classList.add('option-correct');
+                document.querySelector(`#label-${index} input`).checked = true;
+            }
+
+            // Disable further clicks
+            document.getElementById('options-container').classList.add('answered');
+
+            calculateScore();
+        }
+
+        function calculateScore() {
+            score = 0;
+            for (let i = 0; i < questions.length; i++) {
+                if (userAnswers[i] === questions[i].correctIndex) { score += 10; }
+            }
+            updateScoreDisplay();
+        }
+
+        function updateScoreDisplay() {
+            document.getElementById('score-display').innerText = score;
+        }
+
+        function nextQuestion() {
+            if (currentQIndex < questions.length - 1) {
+                currentQIndex++;
+                loadQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQIndex > 0) {
+                currentQIndex--;
+                loadQuestion();
+            } else {
+                if(currentMode === 'premium') showView('view-premium-chapters');
+                else showView('view-trial-menu');
+            }
+        }
+
+        function showHow() { 
+            const expBox = document.getElementById('explanation-box');
+            if (expBox.style.display === 'none' || expBox.style.display === '') {
+                expBox.style.display = 'block';
+            } else {
+                expBox.style.display = 'none';
+            }
+        }
+
+        function jumpToQ() {
+            let qNum = parseInt(document.getElementById('jump-input').value);
+            if(qNum >= 1 && qNum <= questions.length) {
+                currentQIndex = qNum - 1;
+                loadQuestion();
+            } else {
+                alert(`Please pick a question number between 1 and ${questions.length} 🎯`);
+            }
+        }
+
+        function finishQuiz() {
+            document.getElementById('final-score').innerText = score;
+            if (currentMode === 'trial') {
+                document.getElementById('trial-upsell').style.display = 'block';
+                document.getElementById('back-to-chap-btn').style.display = 'none';
+            } else {
+                document.getElementById('trial-upsell').style.display = 'none';
+                document.getElementById('back-to-chap-btn').style.display = 'inline-flex';
+            }
+            showView('view-finish');
+        }
+    </script>
+</body>
+</html>
